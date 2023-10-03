@@ -1,0 +1,10 @@
+{
+  "firstName": "Rahul",
+  "middleName": "Kumar",
+  "lastName": "Singh",
+  "vacancy" : "Junior Manual QA",
+  "email" : "abc@gmail.com",
+  "mobile" : "9999999999",
+  "status" : "Application Initiated",
+  "keywords": "Manual Testing, Sql, API Testing"
+}
