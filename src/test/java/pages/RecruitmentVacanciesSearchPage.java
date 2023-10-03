@@ -1,17 +1,19 @@
 package pages;
 
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import setup.OrangeHrmSetup;
+import utils.Utils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static setup.OrangeHrmSetup.driver;
+import static setup.OrangeHrmSetup.softAssert;
 
 public class RecruitmentVacanciesSearchPage {
     public RecruitmentVacanciesSearchPage(WebDriver driver) {
@@ -59,6 +61,13 @@ public class RecruitmentVacanciesSearchPage {
     @FindBy(xpath = "//div[contains(@class,'oxd-grid-3')]/div/div/div[2]/div/div[contains(@class,'oxd-select-text')]")
     WebElement jobTitleDropDown;
 
+    public void vacanciesSearchWithoutFilter(){
+        recruitmentMenu.click();
+        vacanciesPage.click();
+        softAssert.assertTrue(searchButton.isEnabled());
+        searchButton.click();
+
+    }
     public void vacanciesSearchWithSingleFilter() {
         recruitmentMenu.click();
         vacanciesPage.click();
@@ -72,6 +81,7 @@ public class RecruitmentVacanciesSearchPage {
                 break;
             }
         }
+        softAssert.assertTrue(searchButton.isEnabled());
         searchButton.click();
 
     }
@@ -149,7 +159,7 @@ public class RecruitmentVacanciesSearchPage {
         String foundRecordAfterSelect = recordFound.getText().trim();
         int beforeSelectRecord =  Integer.valueOf(foundRecordBeforeSelect.substring(1,foundRecordBeforeSelect.indexOf(")")));
         int afterDeleteRecord =  Integer.valueOf(foundRecordAfterSelect.substring(1,foundRecordAfterSelect.indexOf(")")));
-        Assert.assertEquals(beforeSelectRecord - 2 , afterDeleteRecord);
+        softAssert.assertEquals(beforeSelectRecord - 2 , afterDeleteRecord);
     }
     public void deleteIconOfVacancies(){
         recruitmentMenu.click();
@@ -162,38 +172,39 @@ public class RecruitmentVacanciesSearchPage {
         editButtonIcon.click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         System.out.println(editPageTitle.getText());
-        Assert.assertEquals("Edit Vacancy",editPageTitle.getText());
+        softAssert.assertEquals("Edit Vacancy",editPageTitle.getText());
     }
     public void addNewVacancy() {
+        JSONObject newVacancy = Utils.loadJsonFile("./src/test/resources/addNewVacancy.json");
         recruitmentMenu.click();
         vacanciesPage.click();
         addButton.click();
-        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[1]/div[1]/div[1]/div[2]/input[contains(@class,'oxd-input oxd-input--active'")).sendKeys("Junior Account Assistant");
+        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[1]/div[1]/div[1]/div[2]/input[contains(@class,'oxd-input oxd-input--active')]")).sendKeys((String) newVacancy.get("vacancy"));
         jobTitleDropDown.click();
         System.out.println("Total number of options in status :"+options.size());
-        //driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         for(WebElement op:options)
         {
-            if(op.getText().equals("Software Engineer"))
+            if(op.getText().equals((String) newVacancy.get("job")))
             {
                 op.click();
                 break;
             }
         }
-        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[2]/div[1]/div[1]/div[2]/textarea[1]")).sendKeys("manual testing opening");
-        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[3]/div[1]/div[1]/div[2]")).sendKeys("Ros");
+        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[2]/div[1]/div[1]/div[2]/textarea[1]")).sendKeys((String) newVacancy.get("description"));
+        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[3]/div[1]/div[1]/div[2]/div/div/input")).sendKeys(((String) newVacancy.get("hiringManager")).substring(0,4));
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         System.out.println("Total number of options in Hiring Manager :"+options.size());
         for(WebElement op:options)
         {
-            if(op.getText().equals("Roshni Sharma"))
+            if(op.getText().equals((String) newVacancy.get("hiringManager")))
             {
                 op.click();
                 break;
             }
         }
-        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/input")).sendKeys("2");
+        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/input")).sendKeys((String) newVacancy.get("positions"));
         driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[7]/button[contains(@class,'oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space')]")).click();
+        softAssert.assertEquals("Edit Vacancy",editPageTitle.getText());
     }
 
 }

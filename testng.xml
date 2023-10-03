@@ -8,6 +8,12 @@
         </classes>
     </test>
 
+    <test name="Orange HRM Website Logout">
+        <classes>
+            <class name="testrunner.LogoutPageTestRunner"/>
+        </classes>
+    </test>
+
     <test name="Orange HRM Website Candidate Page inside Recruitment Module">
         <classes>
             <class name="testrunner.CandidatesPageTestRunner"/>
@@ -20,4 +26,4 @@
         </classes>
     </test>
 
-</suite> <!-- Suite -->
+</suite>

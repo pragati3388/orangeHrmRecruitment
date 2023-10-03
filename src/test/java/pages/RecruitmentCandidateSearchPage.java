@@ -6,16 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import setup.OrangeHrmSetup;
 import utils.Utils;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static setup.OrangeHrmSetup.driver;
+import static setup.OrangeHrmSetup.*;
 
 public class RecruitmentCandidateSearchPage {
 
@@ -66,11 +64,14 @@ public class RecruitmentCandidateSearchPage {
     WebElement vacancyDropDown;
 
 
-    public void candidateSearch(){
+    public void candidateSearchWithoutFilter(){
         recruitmentMenu.click();
+        softAssert.assertTrue(searchButton.isEnabled());
         searchButton.click();
+
     }
-    public void candidateSearch1(){
+
+    public void candidateSearchWithDropDownFilter(){
         recruitmentMenu.click();
         status.click();
         System.out.println("Total number of options in status :"+options.size());
@@ -84,7 +85,7 @@ public class RecruitmentCandidateSearchPage {
         }
         searchButton.click();
     }
-    public void candidateSearch2() throws InterruptedException {
+    public void candidateSearchWithInputTextBoxFilter(){
         recruitmentMenu.click();
         srchInputs.sendKeys("Root");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -128,7 +129,7 @@ public class RecruitmentCandidateSearchPage {
 
     }
 
-    public void deleteCandidateSingleSelect(){
+    public void deleteCandidateOnSingleCheckBoxSelect(){
         recruitmentMenu.click();
         firstRowSelect.click();
     }
@@ -143,14 +144,14 @@ public class RecruitmentCandidateSearchPage {
         String foundRecordAfterSelect = recordFound.getText().trim();
         int beforeSelectRecord =  Integer.valueOf(foundRecordBeforeSelect.substring(1,foundRecordBeforeSelect.indexOf(")")));
         int afterDeleteRecord =  Integer.valueOf(foundRecordAfterSelect.substring(1,foundRecordAfterSelect.indexOf(")")));
-        Assert.assertEquals(beforeSelectRecord - 2 , afterDeleteRecord);
+        softAssert.assertEquals(beforeSelectRecord - 2 , afterDeleteRecord);
     }
     public void viewButton(){
         recruitmentMenu.click();
         String selectedCandidateName= driver.findElement(By.xpath("//div[contains(@class,'orangehrm-container')]/div[1]/div[2]/div[1]/div[1]/div[3]/div")).getText().trim();
         viewButton.click();
         String candidateName= driver.findElement(By.xpath("//div[contains(@class,'oxd-grid-3 orangehrm-full-width-grid')]/div[1]/div[1]/div[2]/p")).getText().trim();
-        Assert.assertEquals(selectedCandidateName,candidateName);
+        softAssert.assertEquals(selectedCandidateName,candidateName);
     }
     public void deleteButtonIcon() {
         recruitmentMenu.click();
@@ -180,11 +181,11 @@ public class RecruitmentCandidateSearchPage {
         driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[8]/button[contains(@class,'oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space')]")).click();//saveButton
 
         String candidateName= driver.findElement(By.xpath("//div[contains(@class,'oxd-grid-3 orangehrm-full-width-grid')]/div[1]/div[1]/div[2]/p")).getText().trim();
-        Assert.assertEquals((String) newCandidate.get("firstName") + " "+ (String) newCandidate.get("middleName") + " " + (String) newCandidate.get("lastName") ,candidateName);
+        softAssert.assertEquals((String) newCandidate.get("firstName") + " "+ (String) newCandidate.get("middleName") + " " + (String) newCandidate.get("lastName") ,candidateName);
         String vacancy = driver.findElement(By.xpath("//div[contains(@class,'oxd-grid-3 orangehrm-full-width-grid')]/div[2]/div[1]/div[2]/p")).getText().trim();
-        Assert.assertEquals((String) newCandidate.get("vacancy"),vacancy);
+        softAssert.assertEquals((String) newCandidate.get("vacancy"),vacancy);
         String applicationStatus = driver.findElement(By.xpath("//div[contains(@class,'orangehrm-recruitment-status')]/p")).getText().trim();
-        Assert.assertTrue(applicationStatus.contains((String) newCandidate.get("status")));
+        softAssert.assertTrue(applicationStatus.contains((String) newCandidate.get("status")));
 
     }
 
