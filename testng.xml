@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" verbose="1" name="Orange HRM Website Recruitment Module Automation">
+
+    <test name="Orange HRM Website Login Page">
+        <classes>
+            <class name="testrunner.LoginPageTestRunner"/>
+        </classes>
+    </test>
+
+    <test name="Orange HRM Website Candidate Page inside Recruitment Module">
+        <classes>
+            <class name="testrunner.CandidatesPageTestRunner"/>
+        </classes>
+    </test>
+
+    <test name="Orange HRM Website Vacancy Page inside Recruitment Module">
+        <classes>
+            <class name="testrunner.VacanciesPageTestRunner"/>
+        </classes>
+    </test>
+
+</suite> <!-- Suite -->
