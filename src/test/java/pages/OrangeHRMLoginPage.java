@@ -42,7 +42,7 @@ public class OrangeHRMLoginPage {
         this.username.sendKeys(username);//username
         this.password.sendKeys(password);//password
         btnLogin.click();
-        return lvlInvalidCreds.getText();
+        return lvlInvalidCreds.getText();//message text display
     }
     public String doLogInWithoutCreds(String username, String password){
         btnLogin.click();
@@ -58,7 +58,7 @@ public class OrangeHRMLoginPage {
         profileDropDown.click();
         logout.click();
         softAssert.assertTrue(username.isEnabled());
-
+        softAssert.assertAll();
     }
 
 }

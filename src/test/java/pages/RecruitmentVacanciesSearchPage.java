@@ -191,12 +191,14 @@ public class RecruitmentVacanciesSearchPage {
             }
         }
         driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[2]/div[1]/div[1]/div[2]/textarea[1]")).sendKeys((String) newVacancy.get("description"));
-        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[3]/div[1]/div[1]/div[2]/div/div/input")).sendKeys(((String) newVacancy.get("hiringManager")).substring(0,4));
+        String hiringManager = driver.findElement(By.xpath("//span[contains(@class,'oxd-userdropdown-tab')]/p")).getText();
+        System.out.println(hiringManager);
+        driver.findElement(By.xpath("//div[contains(@class,'orangehrm-card-container')]/form/div[3]/div[1]/div[1]/div[2]/div/div/input")).sendKeys((hiringManager).substring(0,4));
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         System.out.println("Total number of options in Hiring Manager :"+options.size());
         for(WebElement op:options)
         {
-            if(op.getText().equals((String) newVacancy.get("hiringManager")))
+            if(op.getText().contains((hiringManager).substring(0,4)))
             {
                 op.click();
                 break;

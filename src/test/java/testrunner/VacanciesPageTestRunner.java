@@ -24,9 +24,10 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         vacanciesSearch.vacanciesSearchWithoutFilter();
         String message = OrangeHrmSetup.driver.findElement(By.xpath("//div[@class='orangehrm-paper-container']/div[2]/div/span[@class='oxd-text oxd-text--span']")).getText();
         softAssert.assertTrue(message.contains("Records Found"));
+        softAssert.assertAll();
     }
     @Test(priority = 2, description ="Search candidate without filter")
-    public void vacanciesSearchWithSingleFilter() throws InterruptedException{
+    public void vacanciesSearchWithSingleFilter(){
         loginPage=new OrangeHRMLoginPage(driver);
         String username= (String) jsonObject.get("username");;
         String password= (String) jsonObject.get("password");
@@ -36,6 +37,7 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         String message = driver.findElement(By.xpath("//div[@class='orangehrm-paper-container']/div[2]/div/span[@class='oxd-text oxd-text--span']")).getText();
         System.out.println(message);
         softAssert.assertTrue(message.contains("Found"));
+        softAssert.assertAll();
     }
 
     @Test(priority = 3, description ="search with multiFilter")
@@ -48,6 +50,7 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         vacanciesSearch.vacanciesSearchWithMultiFilter();
         String message = driver.findElement(By.xpath("//div[@class='orangehrm-paper-container']/div[2]/div/span[@class='oxd-text oxd-text--span']")).getText();
         softAssert.assertTrue(message.contains("Found"));
+        softAssert.assertAll();
     }
 
     @Test(priority = 4, description ="Reset Button on Vacancies Page")
@@ -60,6 +63,7 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         vacanciesSearch.vacanciesResetButton();
         String message = driver.findElement(By.xpath("//div[@class='orangehrm-paper-container']/div[2]/div/span[@class='oxd-text oxd-text--span']")).getText();
         softAssert.assertTrue(message.contains("Found"));
+        softAssert.assertAll();
     }
     @Test(priority = 5, description ="Select all vacancy record")
     public void vacanciesSelectAllRecords(){
@@ -78,6 +82,7 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         String message = driver.findElement(By.xpath("//div[@class='orangehrm-paper-container']/div[2]/div/span[@class='oxd-text oxd-text--span']")).getText();
         System.out.println(message);
         softAssert.assertTrue(message.contains("Found"));
+        softAssert.assertAll();
     }
     @Test(priority = 6, description = "Single selected Vacancy")
     public void vacanciesSingleSelect(){
@@ -97,6 +102,7 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         String confirmationMsg = driver.findElement(By.xpath("//div[contains(@class,'oxd-dialog-container-default--inner')]/div[1]/div[2]/p[contains(@class,'oxd-text oxd-text--p oxd-text--card-body')]")).getText();
         System.out.println(confirmationMsg);
         softAssert.assertTrue(confirmationMsg.contains("permanently deleted"));
+        softAssert.assertAll();
     }
     @Test(priority = 7, description = "Multi selected records Delete Candidates")
     public void deleteCandidateMultiSelect(){
@@ -106,24 +112,27 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         loginPage.doLogin(username, password);
         vacanciesSearch =new RecruitmentVacanciesSearchPage(driver);
         vacanciesSearch.deleteMultiSelectVacancies();
+        softAssert.assertAll();
     }
     @Test(priority = 8, description = "Validating Delete Icon")
-    public void deleteIconVacancies() throws InterruptedException {
+    public void deleteIconVacancies(){
         loginPage = new OrangeHRMLoginPage(OrangeHrmSetup.driver);
         String username = (String) jsonObject.get("username");
         String password = (String) jsonObject.get("password");
         loginPage.doLogin(username, password);
         vacanciesSearch =new RecruitmentVacanciesSearchPage(driver);
         vacanciesSearch.deleteIconOfVacancies();
+        softAssert.assertAll();
     }
     @Test(priority = 9, description = "Validating Edit Icon")
-    public void editIconOfVacancies() throws InterruptedException {
+    public void editIconOfVacancies(){
         loginPage = new OrangeHRMLoginPage(OrangeHrmSetup.driver);
         String username = (String) jsonObject.get("username");
         String password = (String) jsonObject.get("password");
         loginPage.doLogin(username, password);
         vacanciesSearch =new RecruitmentVacanciesSearchPage(driver);
         vacanciesSearch.editIconOfVacancies();
+        softAssert.assertAll();
     }
 
     @Test(priority = 10, description = "Adding new Vacancy")
@@ -134,6 +143,7 @@ public class VacanciesPageTestRunner extends OrangeHrmSetup {
         loginPage.doLogin(username, password);
         vacanciesSearch =new RecruitmentVacanciesSearchPage(driver);
         vacanciesSearch.addNewVacancy();
+        softAssert.assertAll();
     }
 
 

@@ -16,6 +16,7 @@ public class LoginPageTestRunner extends OrangeHrmSetup {
         loginPage.doLogin(username,password);
         String message = driver.findElement(By.tagName("h6")).getText();
         softAssert.assertEquals("Dashboard",message);
+        softAssert.assertAll();
     }
 
     @Test(priority = 2,description = "User doLogin with invalid credential")
@@ -24,6 +25,7 @@ public class LoginPageTestRunner extends OrangeHrmSetup {
         String message_actual= loginPage.doLogInWithInvalidCreds("Simple","45256");
         String message_expected="Invalid credentials";
         softAssert.assertTrue(message_actual.contains(message_expected));
+        softAssert.assertAll();
     }
 
     @Test(priority = 3,description = "User doLogin with invalid username and valid password")
@@ -32,6 +34,7 @@ public class LoginPageTestRunner extends OrangeHrmSetup {
         String message_actual= loginPage.doLogInWithInvalidCreds("Abcd","admin123");
         String message_expected="Invalid credentials";
         softAssert.assertTrue(message_actual.contains(message_expected));
+        softAssert.assertAll();
     }
 
     @Test(priority = 4,description = "User doLogin without credentials")
@@ -40,6 +43,7 @@ public class LoginPageTestRunner extends OrangeHrmSetup {
         String message_actual= loginPage.doLogInWithoutCreds("","");
         String message_expected="Required";
         softAssert.assertTrue(message_actual.contains(message_expected));
+        softAssert.assertAll();
     }
 
 }

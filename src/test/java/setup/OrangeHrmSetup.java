@@ -29,7 +29,6 @@ public class OrangeHrmSetup {
     }
     @AfterMethod
     public void closeDriver(){
-        softAssert.assertAll();
         driver.close();
     }
 }
